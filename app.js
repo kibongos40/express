@@ -50,7 +50,7 @@ app.all("*", (req, res) => {
 // Last Line
 console.clear();
 mongoose
-	.connect("mongodb+srv://kibongo:kibongo@cluster0.rtftzhq.mongodb.net/")
+	.connect("mongodb+srv://kibongo:kibongo@cluster0.rtftzhq.mongodb.net/portfolio")
 	.then(() => {
 		console.log("Connected");
 		app.listen(port, () => {
