@@ -50,13 +50,13 @@ app.all("*", (req, res) => {
 // Last Line
 console.clear();
 mongoose
-    .connect("mongodb://127.0.0.1:27017/portfolio")
-    .then(() => {
-        console.log("Connected");
-        app.listen(port, () => {
-            console.log(`Running on ${port}`);
-        });
-    })
-    .catch((error) => {
-        console.log(error);
-    });
+	.connect("mongodb+srv://kibongo:kibongo@cluster0.rtftzhq.mongodb.net/")
+	.then(() => {
+		console.log("Connected");
+		app.listen(port, () => {
+			console.log(`Running on ${port}`);
+		});
+	})
+	.catch((error) => {
+		console.log(error);
+	});
