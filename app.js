@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const Blog = require("./models/blogModels");
 
-const port = 100;
+const port = 3000;
 
 app.use(express.static("public"));
 app.use(express.json());
