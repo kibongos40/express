@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 app.get("/blogs", async (req, res) => {
     try {
-        let blogs = await Blog.find({}, "_id title");
+        let blogs = await Blog.find({}, "_id description title picture");
         res.status(200).json(blogs);
     } catch (error) {
     }
