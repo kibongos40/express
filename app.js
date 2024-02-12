@@ -13,6 +13,7 @@ app.use(express.json());
 
 
 app.get("/", (req, res) => {
+    console.log("Home");
     res.send({
         message: "Welcome to Kibongo Simon Peter's Blog"
     });
