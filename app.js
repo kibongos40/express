@@ -1,5 +1,8 @@
 const express = require("express");
 const app = express();
+
+var cors = require("cors");
+
 const mongoose = require("mongoose");
 
 const Blog = require("./models/blogModels");
@@ -8,7 +11,7 @@ const port = 3000;
 
 app.use(express.static("public"));
 app.use(express.json());
-
+app.use(cors());
 // Default;
 
 
