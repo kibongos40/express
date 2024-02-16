@@ -24,18 +24,6 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(cors());
 
-function checkLogin(req: Request, res: Response, next: ()=>void){
-	if (req.headers.authorization){
-		let token: string = req.headers.authorization.split(' ')[1];
-		jwt.verify(token, process.env.JWT_SECRET!, (err: any, user: any) => {
-        if (err) {
-            return res.sendStatus(403); // Forbidden
-        }});
-	}
-	
-	next();
-}
-
 
 app.get("/", (req: Request, res: Response) => {
 	console.log("Home");
