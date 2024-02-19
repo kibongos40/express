@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Backend for portfolio",
-  "main": "app.js",
+  "main": "./build/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./build/app.js",
@@ -11,6 +11,7 @@
   "author": "Kibongo Simon Peter",
   "license": "ISC",
   "dependencies": {
+    "@netlify/functions": "^2.6.0",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.5",
     "axios": "^1.6.7",
@@ -19,7 +20,8 @@
     "dotenv": "^16.4.4",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.1.1"
+    "mongoose": "^8.1.1",
+    "serverless-http": "^3.2.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
