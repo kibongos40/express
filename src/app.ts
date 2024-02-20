@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import mongoose, { ObjectId } from "mongoose";
 
@@ -10,10 +10,25 @@ const app = express();
 const port = 3000;
 
 // Routers
-import blogRoute from "./routes/blogs";
+import blogsRoute from "./routes/blogs";
+import messagesRoute from "./routes/messages"
+
+// Handling Invalid JSON
+
+ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+		if (err instanceof SyntaxError && "body" in err) {
+			console.error(err);
+			return res.status(400).send({ status: 400, message: err.message }); // Bad request
+		}
+		next();
+ });
 
 // Initialising routes
-app.use("/blogs", blogRoute);
+
+app.use("/blogs", blogsRoute);
+app.use("/messages", messagesRoute);
+
+// Mongodb connection string
 
 let uri:any = process.env.MONGODB;
 

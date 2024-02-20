@@ -1,13 +1,13 @@
-import express, {Request, Response, request} from "express";
+import express, {Request, Response} from "express";
 import Blog, { IBlog } from "../models/blogModels";
 import isAdmin from "./isAdmin";
 import mongoose from "mongoose";
 
 
-const blogRoute = express.Router();
-blogRoute.use(express.json());
+const blogsRoute = express.Router();
+blogsRoute.use(express.json());
 
-blogRoute.get("/", async (req: Request, res: Response) => {
+blogsRoute.get("/", async (req: Request, res: Response) => {
 	try {
 		let blogs: IBlog[] = await Blog.find({}, "_id description title picture");
 		res.status(200).json(blogs);
@@ -16,7 +16,7 @@ blogRoute.get("/", async (req: Request, res: Response) => {
 	}
 });
 
-blogRoute.get("/get/:id", async (req: Request, res: Response) => {
+blogsRoute.get("/get/:id", async (req: Request, res: Response) => {
 	try {
 		let blog = await Blog.findById(req.params.id);
 		res.status(200).json(blog);
@@ -31,7 +31,7 @@ blogRoute.get("/get/:id", async (req: Request, res: Response) => {
 
 // Processing
 
-blogRoute.delete("/delete/:id?",isAdmin, async(req: Request, res: Response)=>{
+blogsRoute.delete("/delete/:id?",isAdmin, async(req: Request, res: Response)=>{
     if(req.params.id){
         let bid = req.params.id;
         let deleted = await Blog.findByIdAndDelete(bid);
@@ -52,7 +52,7 @@ blogRoute.delete("/delete/:id?",isAdmin, async(req: Request, res: Response)=>{
 })
 
 
-blogRoute.post("/add",isAdmin,async (req: Request, res: Response) => {
+blogsRoute.post("/add",isAdmin,async (req: Request, res: Response) => {
 	try {
 		const blog: IBlog = await Blog.create(req.body);
 		res.status(200).json(blog);
@@ -63,4 +63,4 @@ blogRoute.post("/add",isAdmin,async (req: Request, res: Response) => {
 });
 
 
-export default blogRoute;
+export default blogsRoute;
