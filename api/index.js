@@ -14,7 +14,7 @@ const port = 3000;
 // Routers
 const blogs_1 = __importDefault(require("./routes/blogs"));
 // Initialising routes
-app.use("/blogs", blogs_1.default);
+app.use("/api/blogs", blogs_1.default);
 let uri = process.env.MONGODB;
 console.clear();
 app.use(express_1.default.static("public"));
