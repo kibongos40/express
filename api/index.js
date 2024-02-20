@@ -31,7 +31,7 @@ function checkLogin(req, res, next) {
     }
     next();
 }
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
     console.log("Home");
     res.send({
         message: "Welcome to Kibongo Simon Peter's Blog",
