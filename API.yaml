@@ -1,265 +1,250 @@
-_type: export
-__export_format: 4
-__export_date: 2024-02-20T02:36:48.163Z
-__export_source: insomnia.desktop.app:v2023.5.6
-resources:
-  - _id: req_a3f382f23c4a4cb383126f5a25359bc4
-    parentId: fld_f602dda6f6a742d996c1a02718b5365c
-    modified: 1708396565796
-    created: 1708395977347
-    url: http://127.0.0.1:3000/messages
-    name: New message
-    description: ""
-    method: POST
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"name": "kibongo",
-        	"email": "someone@gmail.com",
-        	"message": "abcdefg"
-        }
-    parameters: []
-    headers:
-      - name: Content-Type
-        value: application/json
-      - name: User-Agent
-        value: Insomnia/2023.5.6
-    authentication: {}
-    metaSortKey: -1708395977347
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: fld_f602dda6f6a742d996c1a02718b5365c
-    parentId: wrk_93466effacdc485b906da7dfc37637e5
-    modified: 1708389424104
-    created: 1708389424104
-    name: Messages
-    description: ""
-    environment: {}
-    environmentPropertyOrder: null
-    metaSortKey: -1708389424104
-    _type: request_group
-  - _id: wrk_93466effacdc485b906da7dfc37637e5
-    parentId: null
-    modified: 1707670378466
-    created: 1707670378466
-    name: Backend
-    description: ""
-    scope: collection
-    _type: workspace
-  - _id: req_004b51695e014ff9a9f71cdc17df6642
-    parentId: fld_f602dda6f6a742d996c1a02718b5365c
-    modified: 1708395972688
-    created: 1708395905266
-    url: http://127.0.0.1:3000/messages/delete/65d40b4fb1cd16762eafec5e
-    name: Delete message
-    description: ""
-    method: GET
-    body: {}
-    parameters: []
-    headers:
-      - name: User-Agent
-        value: Insomnia/2023.5.6
-    authentication: {}
-    metaSortKey: -1708395905266
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_23476920f4814ff2af4b48315a58d9a2
-    parentId: fld_f602dda6f6a742d996c1a02718b5365c
-    modified: 1708395903292
-    created: 1708394010978
-    url: http://127.0.0.1:3000/messages/
-    name: All messages
-    description: ""
-    method: GET
-    body: {}
-    parameters: []
-    headers:
-      - name: User-Agent
-        value: Insomnia/2023.5.6
-    authentication:
-      type: bearer
-      token: 119594ffbb47cfa0016e18bfd21ddcfc111f9dd1b7991a5c4fa3937853bc88b4
-      prefix: Bearer
-      disabled: false
-    metaSortKey: -1708394010978
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_b8efe46481254d81b2c6df4011b41924
-    parentId: fld_c8bf9d6483c64348bc4ac4912419993d
-    modified: 1708389385509
-    created: 1708098888828
-    url: http://127.0.0.1:3000/blogs
-    name: Get Single
-    description: ""
-    method: GET
-    body: {}
-    parameters: []
-    headers:
-      - name: User-Agent
-        value: Insomnia/2023.5.6
-    authentication: {}
-    metaSortKey: -1708093140618
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: fld_c8bf9d6483c64348bc4ac4912419993d
-    parentId: wrk_93466effacdc485b906da7dfc37637e5
-    modified: 1707743237459
-    created: 1707743237459
-    name: Blogs
-    description: ""
-    environment: {}
-    environmentPropertyOrder: null
-    metaSortKey: -1707743237459
-    _type: request_group
-  - _id: req_8233606ee0e04b0b9025436a1710248e
-    parentId: fld_c8bf9d6483c64348bc4ac4912419993d
-    modified: 1708098941117
-    created: 1708093140518
-    url: http://127.0.0.1:3000/blogs/delete/65cf8531d2c712d9c5a00c33
-    name: Delete
-    description: ""
-    method: DELETE
-    body: {}
-    parameters: []
-    headers:
-      - name: User-Agent
-        value: Insomnia/2023.5.6
-    authentication:
-      type: bearer
-      token: 119594ffbb47cfa0016e18bfd21ddcfc111f9dd1b7991a5c4fa3937853bc88b4
-      prefix: Bearer
-      disabled: false
-    metaSortKey: -1708093140518
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_0106be0c893d4034a23166e5f18e7a9e
-    parentId: fld_c8bf9d6483c64348bc4ac4912419993d
-    modified: 1708093598386
-    created: 1707748424404
-    url: http://127.0.0.1:3000/blogs
-    name: All blogs
-    description: ""
-    method: GET
-    body: {}
-    parameters: []
-    headers:
-      - name: User-Agent
-        value: Insomnia/2023.5.6
-    authentication: {}
-    metaSortKey: -1707748424404
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_6aeec265a3a143619b5b413f87e2c885
-    parentId: fld_c8bf9d6483c64348bc4ac4912419993d
-    modified: 1708099181418
-    created: 1707742882291
-    url: http://127.0.0.1:3000/blogs/add/
-    name: New Blog
-    description: ""
-    method: POST
-    body:
-      mimeType: application/json
-      text: >-
-        {
-        	"title": "Blog 404",
-        	"description": "Friday blog",
-        	"content": "jhfdjsd fmnsd fms dfsdfjkdsbf sdfj dsmfsfdn",
-        	"picture": "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        }
-    parameters: []
-    headers:
-      - name: Content-Type
-        value: application/json
-      - name: User-Agent
-        value: Insomnia/2023.5.6
-    authentication:
-      type: bearer
-      token: 119594ffbb47cfa0016e18bfd21ddcfc111f9dd1b7991a5c4fa3937853bc88b4
-      prefix: Bearer
-    metaSortKey: -1707743243341
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_7c7313bdd5884038bd0e8d37fbb98a90
-    parentId: wrk_93466effacdc485b906da7dfc37637e5
-    modified: 1708093611771
-    created: 1707670384287
-    url: http://127.0.0.1:3000
-    name: root
-    description: ""
-    method: GET
-    body: {}
-    parameters: []
-    headers:
-      - name: User-Agent
-        value: Insomnia/2023.5.6
-    authentication: {}
-    metaSortKey: -1707670384288
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: env_017954dfac11fa9dae379f32ba0a22d541781ca4
-    parentId: wrk_93466effacdc485b906da7dfc37637e5
-    modified: 1707670378468
-    created: 1707670378468
-    name: Base Environment
-    data: {}
-    dataPropertyOrder: null
-    color: null
-    isPrivate: false
-    metaSortKey: 1707670378468
-    _type: environment
-  - _id: jar_017954dfac11fa9dae379f32ba0a22d541781ca4
-    parentId: wrk_93466effacdc485b906da7dfc37637e5
-    modified: 1707670378471
-    created: 1707670378471
-    name: Default Jar
-    cookies: []
-    _type: cookie_jar
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Backend",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "http://127.0.0.1:3000": {
+      "get": {
+        "description": "",
+        "summary": "root",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful"
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": []
+      }
+    },
+    "http://127.0.0.1:3000/blogs/add/": {
+      "post": {
+        "description": "",
+        "summary": "New Blog",
+        "tags": [
+          "Blogs"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful"
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "title": "Blog 404",
+                  "description": "Friday blog",
+                  "content": "jhfdjsd fmnsd fms dfsdfjkdsbf sdfj dsmfsfdn",
+                  "picture": "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "http://127.0.0.1:3000/blogs": {
+      "get": {
+        "description": "",
+        "summary": "Get Single",
+        "tags": [
+          "Blogs"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful"
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": []
+      }
+    },
+    "http://127.0.0.1:3000/blogs/delete/65cf8531d2c712d9c5a00c33": {
+      "delete": {
+        "description": "",
+        "summary": "Delete",
+        "tags": [
+          "Blogs"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful"
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "http://127.0.0.1:3000/messages/": {
+      "get": {
+        "description": "",
+        "summary": "All messages",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful"
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "http://127.0.0.1:3000/messages/delete/65d40b4fb1cd16762eafec5e": {
+      "get": {
+        "description": "",
+        "summary": "Delete message",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful"
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": []
+      }
+    },
+    "http://127.0.0.1:3000/messages": {
+      "post": {
+        "description": "",
+        "summary": "New message",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful"
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "kibongo",
+                  "email": "someone@gmail.com",
+                  "message": "abcdefg"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "Base Environment",
+      "variables": {}
+    }
+  ],
+  "tags": [
+    {
+      "name": "Blogs",
+      "description": ""
+    },
+    {
+      "name": "Messages",
+      "description": ""
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
