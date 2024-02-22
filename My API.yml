@@ -1,0 +1,277 @@
+openapi: 3.0.3
+info:
+  title: Backend
+  description: 'The API backend for my Portfolio'
+  version: 1.0.0
+paths:
+  /:
+    get:
+      description: 'Default'
+      summary: root
+      tags: []
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security: []
+  /blogs/add/:
+    post:
+      description: ''
+      summary: New Blog
+      tags:
+        - Blogs
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: Blog 404
+                description: Friday blog
+                content: jhfdjsd fmnsd fms dfsdfjkdsbf sdfj dsmfsfdn
+                picture: https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
+      security:
+        - bearerAuth: []
+  /blogs:
+    get:
+      description: ''
+      summary: Get Single
+      tags:
+        - Blogs
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security: []
+  /blogs/delete/65cf8531d2c712d9c5a00c33:
+    delete:
+      description: ''
+      summary: Delete
+      tags:
+        - Blogs
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security:
+        - bearerAuth: []
+  /blogs/update/:
+    get:
+      description: ''
+      summary: New Request
+      tags:
+        - Blogs
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security: []
+  /messages/:
+    get:
+      description: ''
+      summary: All messages
+      tags:
+        - Messages
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security:
+        - bearerAuth: []
+  /messages/delete/65d4588158dd8fc905431826:
+    get:
+      description: ''
+      summary: Delete message
+      tags:
+        - Messages
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security: []
+  /messages:
+    post:
+      description: ''
+      summary: New message
+      tags:
+        - Messages
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: kibongo
+                email: someone@gmail.com
+                message: abcde
+      security: []
+  /profile:
+    get:
+      description: ''
+      summary: Get Profile information
+      tags:
+        - Profile
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security: []
+  /profile/update:
+    patch:
+      description: ''
+      summary: Update profile
+      tags:
+        - Profile
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                intro:
+                  type: string
+                  description: ''
+                  default: I am Simon Peter savjdasd nsma djha sdmnasjd asmnd samdnasjhdnmas d
+                picture:
+                  type: string
+                  format: binary
+                  description: ''
+      security:
+        - bearerAuth: []
+  /comments:
+    get:
+      description: ''
+      summary: All comments
+      tags:
+        - Comments
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security: []
+  /comments/new:
+    post:
+      description: ''
+      summary: New comment
+      tags:
+        - Comments
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                blogId: agsf866ed2c712d9c5a00c3d
+                userName: Alias
+                comment: This blog is nice
+      security: []
+servers:
+  - description: Base Environment
+    variables: {}
+    url: 'https://portfolio-api-6vrf.onrender.com'
+tags:
+  - name: Blogs
+    description: 'Managing all the blogs'
+  - name: Messages
+    description: 'Managing all messages'
+  - name: Profile
+    description: 'Getting and updating my profile'
+  - name: Comments
+    description: 'Managing comments'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

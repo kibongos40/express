@@ -39,7 +39,6 @@ function validateUser(data: object){
 }
 
 loginRoute.post("/",(req: Request, res: Response)=>{
-    console.log(sha256("atlp2024"));
     try{
         if(req.body){
             let check = validateUser(req.body);
@@ -59,7 +58,7 @@ loginRoute.post("/",(req: Request, res: Response)=>{
                     "user": username
                 };
                 let token = jwt.sign(payload, process.env.JWT_SECRET as string, {
-                    expiresIn: "10m"
+                    expiresIn: "30m"
                 });
                 res.status(200).json({
                     "status":"success",
