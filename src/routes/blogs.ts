@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express";
+import express, {NextFunction, Request, Response} from "express";
 import Blog, { IBlog } from "../models/blogModels";
 import isAdmin from "./isAdmin";
 import mongoose from "mongoose";
@@ -6,6 +6,16 @@ import mongoose from "mongoose";
 
 const blogsRoute = express.Router();
 blogsRoute.use(express.json());
+
+// Handling Invalid JSON
+
+ blogsRoute.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+		if (err instanceof SyntaxError && "body" in err) {
+			console.error(err);
+			return res.status(400).send({ status: 400, message: err.message }); // Bad request
+		}
+		next();
+ });
 
 blogsRoute.get("/", async (req: Request, res: Response) => {
 	try {

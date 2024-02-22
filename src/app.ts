@@ -9,9 +9,13 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
-// Routers
+// Routes
+
 import blogsRoute from "./routes/blogs";
 import messagesRoute from "./routes/messages"
+import profileRoute from "./routes/profile"
+import commentRoute from "./routes/comments";
+import loginRoute from "./routes/login";
 
 // Handling Invalid JSON
 
@@ -27,15 +31,16 @@ import messagesRoute from "./routes/messages"
 
 app.use("/blogs", blogsRoute);
 app.use("/messages", messagesRoute);
+app.use("/profile", profileRoute);
+app.use("/comments", commentRoute);
+app.use("/login", loginRoute);
 
 // Mongodb connection string
 
 let uri:any = process.env.MONGODB;
 
-console.clear()
 
-
-app.use(express.static("public"));
+app.use("/ftp",express.static("public"));
 app.use(express.json());
 app.use(cors());
 

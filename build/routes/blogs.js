@@ -15,9 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const blogModels_1 = __importDefault(require("../models/blogModels"));
 const isAdmin_1 = __importDefault(require("./isAdmin"));
-const blogRoute = express_1.default.Router();
-blogRoute.use(express_1.default.json());
-blogRoute.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const blogsRoute = express_1.default.Router();
+blogsRoute.use(express_1.default.json());
+// Handling Invalid JSON
+blogsRoute.use((err, req, res, next) => {
+    if (err instanceof SyntaxError && "body" in err) {
+        console.error(err);
+        return res.status(400).send({ status: 400, message: err.message }); // Bad request
+    }
+    next();
+});
+blogsRoute.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let blogs = yield blogModels_1.default.find({}, "_id description title picture");
         res.status(200).json(blogs);
@@ -26,7 +34,7 @@ blogRoute.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         // Handle error appropriately
     }
 }));
-blogRoute.get("/get/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+blogsRoute.get("/get/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let blog = yield blogModels_1.default.findById(req.params.id);
         res.status(200).json(blog);
@@ -38,7 +46,7 @@ blogRoute.get("/get/:id", (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 }));
 // Processing
-blogRoute.delete("/delete/:id?", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+blogsRoute.delete("/delete/:id?", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.params.id) {
         let bid = req.params.id;
         let deleted = yield blogModels_1.default.findByIdAndDelete(bid);
@@ -57,7 +65,7 @@ blogRoute.delete("/delete/:id?", isAdmin_1.default, (req, res) => __awaiter(void
         res.status(400).json({ error: "No id provided" });
     }
 }));
-blogRoute.post("/add", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+blogsRoute.post("/add", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const blog = yield blogModels_1.default.create(req.body);
         res.status(200).json(blog);
@@ -67,4 +75,4 @@ blogRoute.post("/add", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0
         res.status(400).json(error.message);
     }
 }));
-exports.default = blogRoute;
+exports.default = blogsRoute;

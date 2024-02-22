@@ -11,7 +11,9 @@ let messagesRoute: Router = express.Router();
 // Express body parsers
 
 messagesRoute.use(express.json());
-messagesRoute.use(express.urlencoded());
+messagesRoute.use(express.urlencoded({
+	extended: true
+}));
 
 // Joi validate message
 
@@ -54,6 +56,11 @@ messagesRoute.post("/", async (req: Request, res: Response) => {
 
 messagesRoute.get("/", isAdmin, async (req: Request, res: Response) => {
 	let messages: IMessage[] = await Message.find({});
+	if(messages.length == 0){
+		return res.status(404).json({
+			"error": "No messages found"
+		});
+	}
 	res.json(messages);
 });
 

@@ -17,7 +17,7 @@ function isAdmin(req, res, next) {
     }
     else {
         console.log("Unauthorised");
-        res.status(401).json({ error: "Unauthorised" });
+        res.status(423).json({ error: "Unauthorised" });
     }
 }
 exports.default = isAdmin;
