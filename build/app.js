@@ -15,6 +15,7 @@ const blogs_1 = __importDefault(require("./routes/blogs"));
 const messages_1 = __importDefault(require("./routes/messages"));
 const profile_1 = __importDefault(require("./routes/profile"));
 const comments_1 = __importDefault(require("./routes/comments"));
+const login_1 = __importDefault(require("./routes/login"));
 // Handling Invalid JSON
 app.use((err, req, res, next) => {
     if (err instanceof SyntaxError && "body" in err) {
@@ -28,6 +29,7 @@ app.use("/blogs", blogs_1.default);
 app.use("/messages", messages_1.default);
 app.use("/profile", profile_1.default);
 app.use("/comments", comments_1.default);
+app.use("/login", login_1.default);
 // Mongodb connection string
 let uri = process.env.MONGODB;
 app.use("/ftp", express_1.default.static("public"));
