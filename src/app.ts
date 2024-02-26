@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken"
 
 dotenv.config();
 const app = express();
-const port = 3000;
+export const port = 3000;
 
 // Routes
 
@@ -37,7 +37,7 @@ app.use("/login", loginRoute);
 
 // Mongodb connection string
 
-let uri:any = process.env.MONGODB;
+export let uri:any = process.env.MONGODB;
 
 
 app.use("/ftp",express.static("public"));
@@ -46,9 +46,9 @@ app.use(cors());
 
 
 app.get("/", (req: Request, res: Response) => {
-	console.log("Home");
-	res.send({
-		message: "Welcome to Kibongo Simon Peter's Blog",
+	res.status(200).json({
+		"status":"success",
+		"message":"Welcome"
 	});
 });
 
@@ -59,14 +59,5 @@ app.all("*", (req: Request, res: Response) => {
 	});
 });
 
-mongoose
-	.connect(uri)
-	.then(() => {
-		console.log("Connected");
-		app.listen(port, () => {
-			console.log(`Running on ${port}`);
-		});
-	})
-	.catch((error) => {
-		console.log(error);
-	});
+
+export default app;
