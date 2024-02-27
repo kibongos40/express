@@ -1,0 +1,4 @@
+  - name: Test Reporter
+    uses: dorny/test-reporter@v1.8.0
+    description: |
+      Shows test results in GitHub UI
