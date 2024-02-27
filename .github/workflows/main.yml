@@ -8,17 +8,16 @@ permissions:
 jobs:
   build-test:
     name: Build & Test
-    env:
-     JWT_SECRET: 119594ffbb47cfa0016e18bfd21ddcfc111f9dd1b7991a5c4fa3937853bc88b4
-     USERS: '[{"id": 1, "username": "admin","password":"d1d0883593b614ad3886761fc98b5aa67cbba6b50e49b2605a015cc8f9baa475"}]'
-     MONGODB: mongodb+srv://kibongo:kibongo@cluster0.rtftzhq.mongodb.net/portfolio
-     MONGODB_URI: mongodb+srv://kibongo:kibongo@cluster0.rtftzhq.mongodb.net/portfolio
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3     # checkout the repo
       - run: npm ci                   # install packages
       - run: npm test                 # run tests (configured to use jest-junit reporter)
-
+        env:
+          JWT_SECRET: 119594ffbb47cfa0016e18bfd21ddcfc111f9dd1b7991a5c4fa3937853bc88b4
+          USERS: '[{"id": 1, "username": "admin","password":"d1d0883593b614ad3886761fc98b5aa67cbba6b50e49b2605a015cc8f9baa475"}]'
+          MONGODB: mongodb+srv://kibongo:kibongo@cluster0.rtftzhq.mongodb.net/portfolio
+          MONGODB_URI: mongodb+srv://kibongo:kibongo@cluster0.rtftzhq.mongodb.net/portfolio
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed
