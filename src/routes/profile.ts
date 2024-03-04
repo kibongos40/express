@@ -39,7 +39,10 @@ profileRoute.get("/", async(req: Request, res: Response)=>{
         newProfile.intro = initIntro;
         newProfile.picture = initPicture;
         newProfile.save();
-        res.send(newProfile);
+        res.status(200).json({
+					status: "success",
+					message: newProfile,
+				});
     }
     else{
         res.send(profile);
@@ -54,7 +57,7 @@ function validateIntro(data: object){
     return schema.validate(data);
 }
 
-profileRoute.patch("/update",isAdmin,async(req: Request, res: Response)=>{
+profileRoute.patch("/",isAdmin,async(req: Request, res: Response)=>{
     let isEmpty:boolean = false;
     let profile = await Profile.find({});
 
@@ -64,6 +67,7 @@ profileRoute.patch("/update",isAdmin,async(req: Request, res: Response)=>{
     let check = validateIntro(req.body);
     if(check.error){
         return res.status(400).json({
+            "status":"fail",
             "error": check.error.message
         });
     }

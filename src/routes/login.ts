@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response, Router } from "express";
 import Joi from "joi";
 import dotenv from "dotenv";
 import sha256 from "sha256";
+import invalidJson from "./invalidJson";
 
 dotenv.config()
 
@@ -15,13 +16,7 @@ loginRoute.use(express.urlencoded({
 
 // Handling Invalid JSON
 
-loginRoute.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-		if (err && "body" in err) {
-			console.error(err);
-			return res.status(400).send({ message: err.message }); // Bad request
-		}
-		next();
- });
+loginRoute.use(invalidJson);
 
 interface User{
     id: number,
@@ -43,7 +38,7 @@ loginRoute.post("/",(req: Request, res: Response)=>{
         if(req.body){
             let check = validateUser(req.body);
             if(check.error){
-                return res.json({
+                return res.status(400).json({
                     "status":"fail",
                     "message": check.error.message
                 });
@@ -72,17 +67,11 @@ loginRoute.post("/",(req: Request, res: Response)=>{
                 })
             }
         }
-        else{
-            return res.status(403).json({
-                "status": "fail",
-                "error": "Username and password required"
-            });
-        }
     }
-    catch{
+    catch(error){
         res.status(500).json({
             "status": "fail",
-            "error": "Server Error"
+            "error": "error"
         });
     }
 });

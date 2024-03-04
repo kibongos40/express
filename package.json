@@ -4,7 +4,7 @@
 	"description": "Backend for portfolio",
 	"main": "./build/app.js",
 	"scripts": {
-		"test": "npx jest",
+		"test": "npx jest --coverage",
 		"start": "node ./build/app.js",
 		"tscript": "nodemon ./src/index.ts"
 	},

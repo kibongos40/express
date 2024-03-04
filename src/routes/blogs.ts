@@ -8,7 +8,8 @@ function validateBlog(data:object){
 	let schema = Joi.object().keys({
 		title: Joi.string().required(),
 		description: Joi.string().required(),
-		content: Joi.string().required().min(100)
+		content: Joi.string().required().min(5),
+		picture: Joi.string()
 	})
 	return schema.validate(data);
 }
@@ -52,7 +53,7 @@ blogsRoute.get("/:id", async (req: Request, res: Response) => {
 			"message": blog
 		});
 	} catch (error) {
-		res.send(404).json({
+		res.status(404).json({
 			"status": "fail",
             "message": "Blog not found"
         });
@@ -79,17 +80,9 @@ blogsRoute.delete("/:id",isAdmin, async(req: Request, res: Response)=>{
 						message: "Blog not found",
 					});
 				}
-			} else {
-				res.status(400).json({
-					status: "fail",
-					message: "No id provided",
-				});
 			}
 	} catch (error) {
-		res.status(500).json({
-			"status": "fail",
-			"message": "Invalid id provided"
-		});
+		// Nothing here
 	}
 })
 
@@ -97,8 +90,17 @@ blogsRoute.delete("/:id",isAdmin, async(req: Request, res: Response)=>{
 
 blogsRoute.post("/",isAdmin,async (req: Request, res: Response) => {
 	try {
-		const blog: IBlog = await Blog.create(req.body);
-		res.status(201).json(blog);
+		let check = validateBlog(req.body);
+		if(!check.error){
+			const blog: IBlog = await Blog.create(req.body);
+			res.status(201).json(blog);
+		}
+		else{
+			res.status(400).json({
+				"status": "fail",
+				"message":check.error.message
+			});
+		}
 	} catch (error: any) {
 		console.log(error.message);
 		res.status(400).json(error.message);

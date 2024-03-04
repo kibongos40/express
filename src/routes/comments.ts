@@ -3,6 +3,8 @@ import Comment, {IComment} from "../models/commentModel";
 import express, {NextFunction, Request, Response, Router} from "express"
 import Joi from "joi";
 import Blog from "../models/blogModels";
+import invalidJson from "./invalidJson";
+import isAdmin from "./isAdmin";
 
 const commentRoute: Router = express.Router();
 
@@ -22,13 +24,7 @@ function validateComment(data: any){
 
 // Handling Invalid JSON
 
- commentRoute.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-		if (err instanceof SyntaxError && "body" in err) {
-			console.error(err);
-			return res.status(400).send({ status: 400, message: err.message }); // Bad request
-		}
-		next();
- });
+ commentRoute.use(invalidJson);
 
 // All comments
 
@@ -38,42 +34,65 @@ commentRoute.get("/", async (req: Request, res: Response) => {
 	res.status(200).json(comments);
 });
 
+// All comments by ID
+
+
+commentRoute.get("/:id", async (req: Request, res: Response) => {
+    try {
+        let bid = req.params.id;
+        let comments = await Comment.find({blogId: bid});
+        res.status(200).json({
+					"status": "success",
+					"message": comments
+				});
+    } catch (error){
+        res.status(500).json({
+            "status":"fail",
+            "message":"Invalid Blog ID"
+        });
+    }
+});
+
 // Delete Comment
 
-commentRoute.delete("/delete/:", async (req: Request, res: Response) => {
+commentRoute.delete("/:id",isAdmin, async (req: Request, res: Response) => {
     if(req.params.id){
         let commentId = req.params.id;
         try{
             let del = await Comment.findByIdAndDelete(commentId);
             if(del){
                 res.status(200).json({
+                    "status":"success",
                     "message":"Comment deleted"
                 });
             }
             else{
                 res.status(404).json({
-                    "error": "Comment not found"
+                    "status":"fail",
+                    "message": "Comment not found"
                 });
             }
         }
         catch(error: any){
             res.status(404).json({
-                error: "Comment not found",
+                "status":"fail",
+                "message": "Comment not found",
             });
         }
     }
     else{
-        res.status(400).json({"error":"No Id submitted"});
+        res.status(400).json({"status":"fail","message":"No Id submitted"});
     }
 });
 
 // New comment
 
-commentRoute.post("/new", async(req: Request, res: Response)=>{
+commentRoute.post("/", async(req: Request, res: Response)=>{
     let check = validateComment(req.body);
     if(check.error){
         res.status(400).json({
-            "error": check.error.message
+            "status":"fail",
+            "message": check.error.message
         });
     }
     else{
@@ -81,8 +100,10 @@ commentRoute.post("/new", async(req: Request, res: Response)=>{
         try{
             if(await Blog.findById(blogId)){
                 let newComment = await Comment.create(req.body);
-                res.status(200).json({
-                    "message": "Comment received"
+                res.status(201).json({
+                    "status":"success",
+                    "message": "Comment received",
+                    "id": newComment._id
                 });
             }
             else{

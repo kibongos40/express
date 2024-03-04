@@ -3,6 +3,7 @@ import express, { Router, Request, Response, NextFunction } from "express";
 import Joi from "joi";
 import Message, { IMessage } from "../models/messageModel";
 import isAdmin from "./isAdmin";
+import invalidJson from "./invalidJson";
 
 // Router
 
@@ -26,28 +27,26 @@ function validateMessage(message: object) {
 	return schema.validate(message);
 }
 
-// Endpoints:
+
 // Handling Invalid JSON
 
- messagesRoute.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-		if (err && "body" in err) {
-			console.error(err);
-			return res.status(400).send({ message: err.message }); // Bad request
-		}
-		next();
- });
+ messagesRoute.use(invalidJson);
+
 // New Message
 
 messagesRoute.post("/", async (req: Request, res: Response) => {
 	let check = validateMessage(req.body);
 	if (check.error) {
-		res.json({
+		res.status(400).json({
+			status: "fail",
 			error: check.error.message,
 		});
 	} else {
 		let message: IMessage = await Message.create(req.body);
-		res.json({
+		res.status(201).json({
+			status: "success",
 			message: "Your message was received",
+			id: message._id
 		});
 	}
 });
@@ -58,15 +57,19 @@ messagesRoute.get("/", isAdmin, async (req: Request, res: Response) => {
 	let messages: IMessage[] = await Message.find({});
 	if(messages.length == 0){
 		return res.status(404).json({
-			"error": "No messages found"
+			"status": "fail",
+			"message": "No messages found"
 		});
 	}
-	res.json(messages);
+	res.json({
+		status: "success",
+		message: messages,
+	});
 });
 
 // Delete a message
 
-messagesRoute.get("/delete/:id", async (req: Request, res: Response) => {
+messagesRoute.delete("/:id",isAdmin, async (req: Request, res: Response) => {
     let id = req.params.id;
     if(id){
         if(await Message.findByIdAndDelete(id)){
