@@ -1,27 +1,54 @@
+name: Test and Coverage
+
 on:
-  pull_request:
   push:
-permissions:
-  contents: read
-  actions: read
-  checks: write
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
 jobs:
-  build-test:
-    name: Build & Test
+  test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3     # checkout the repo
-      - run: npm ci                   # install packages
-      - run: npm test                 # run tests (configured to use jest-junit reporter)
-        env:
-          JWT_SECRET: 119594ffbb47cfa0016e18bfd21ddcfc111f9dd1b7991a5c4fa3937853bc88b4
-          USERS: '[{"id": 1, "username": "admin","password":"d1d0883593b614ad3886761fc98b5aa67cbba6b50e49b2605a015cc8f9baa475"}]'
-          MONGODB: mongodb+srv://kibongo:kibongo@cluster0.rtftzhq.mongodb.net/portfolio
-          MONGODB_URI: mongodb+srv://kibongo:kibongo@cluster0.rtftzhq.mongodb.net/portfolio
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        if: success() || failure()    # run this step even if previous step failed
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests with coverage
+        run: npm test -- --coverage --ci
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
         with:
-          name: JEST Tests            # Name of the check run which will be created
-          path: reports/jest-1.xml    # Path to test results
-          reporter: jest-junit        # Format of test results
+          name: coverage-report
+          path: coverage/lcov-report
+
+  coverage:
+    runs-on: ubuntu-latest
+
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download coverage report
+        uses: actions/download-artifact@v2
+        with:
+          name: coverage-report
+          path: coverage
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install coveralls
+        run: npm install coveralls --save-dev
+
+      - name: Send coverage data to Coveralls
+        run: npx coveralls < coverage/lcov.info
+
