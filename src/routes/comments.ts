@@ -152,11 +152,11 @@ commentRoute.post("/", async(req: Request, res: Response)=>{
                 });
             }
             else{
-                res.status(400).json({"error": "Blog not found"});
+                res.status(404).json({"error": "Blog not found"});
             }
         }
         catch(error:any){
-            res.status(400).json({"error": "Blog not found"});
+            res.status(404).json({"error": "Blog not found"});
         }
     }
 })

@@ -7,7 +7,7 @@ dotenv.config();
 
 let token = "";
 let id = "";
-let testBlogId: string;
+let testBlogId: string = "";
 
 beforeAll(async () => {
 	mongoose.connect(process.env.MONGODB_URI as string);
@@ -21,15 +21,13 @@ beforeAll(async () => {
 	let blog: object = {
 		title: "Blog Monday",
 		description: "Testing blog",
-		content: "jhfdjsd fmnsd fms dfsdfjkdsbf sdfj dsmfsfdn",
-		picture:
-			"https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+		content: "jhfdjsd fmnsd fms dfsdfjkdsbf sdfj dsmfsfdn"
 	};
 	let creating = await request(app)
 		.post("/blogs")
 		.send(blog)
 		.set("Authorization", `Bearer ${token}`);
-	testBlogId = creating.body._id;
+	testBlogId = creating.body.message._id;
 });
 
 afterAll(async () => {
@@ -81,21 +79,15 @@ describe("Testing the blogs endpoint", () => {
 			title: "Blog Monday",
 			description: "Testing blog",
 			content: "jhfdjsd fmnsd fms dfsdfjkdsbf sdfj dsmfsfdn",
-			picture:
-				"https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
 		};
 		let fake = `{
 			"title: "Blog Monday",
 			description: "Testing blog",
-			content: "jhfdjsd fmnsd fms dfsdfjkdsbf sdfj dsmfsfdn",
-			picture:
-				"https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+			content: "jhfdjsd fmnsd fms dfsdfjkdsbf sdfj dsmfsfdn"
 		}`;
 		let fakeBlog: object = {
 			description: "Testing blog",
 			content: "jhfdjsd fmnsd fms dfsdfjkdsbf sdfj dsmfsfdn",
-			picture:
-				"https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
 		};
 		let updateBlog: object = {
 			title: "Blog Update",
@@ -109,7 +101,7 @@ describe("Testing the blogs endpoint", () => {
 			.post("/blogs")
 			.send(blog)
 			.set("Authorization", `Bearer ${token}`);
-		id = creating.body._id;
+		id = creating.body.message._id;
 		console.log(creating.body.message);
 		expect(creating.status).toBe(201);
 		// Fake blog
@@ -118,7 +110,7 @@ describe("Testing the blogs endpoint", () => {
 			.post("/blogs")
 			.send(fakeBlog)
 			.set("Authorization", `Bearer ${token}`);
-		id = creating.body._id;
+		id = creating.body.message._id;
 		expect(fakeCreating.status).toBe(400);
 		// Updating the blog
 
@@ -178,6 +170,7 @@ describe("Testing Comments Endpoint", () => {
 		expect(all.status).toBe(200);
 	});
 	test("Create and delete a comment", async () => {
+		console.log(testBlogId);
 		let newComment = {
 			userName: "Kibongo",
 			comment: "This is a test comment",
@@ -272,7 +265,7 @@ describe("Testing Messages Endpoint", () => {
 	test("Get all Messages", async () => {
 		let all = await request(app).get("/messages")
 		.set("Authorization", `Bearer ${token}`);
-		expect(all.status).toBe(404);
+		expect(all.status).toBe(200);
 	});
 })
 

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">59.37% </span>
+                <span class="strong">76.56% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>38/64</span>
+                <span class='fraction'>49/64</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/12</span>
+                <span class='fraction'>6/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>9/12</span>
+                <span class='fraction'>10/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.62% </span>
+                <span class="strong">76.27% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>34/59</span>
+                <span class='fraction'>45/59</span>
             </div>
         
             
@@ -319,20 +319,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -345,13 +338,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -361,19 +361,19 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -487,14 +487,14 @@ commentRoute.delete("/:id",isAdmin, async (req: Request, res: Response) =&gt; {
         let commentId = req.params.id;
         try{
             let del = await Comment.findByIdAndDelete(commentId);
-<span class="cstat-no" title="statement not covered" >            if(del){</span>
-<span class="cstat-no" title="statement not covered" >                res.status(200).json({</span>
+            if(del){
+                res.status(200).json({
                     "status":"success",
                     "message":"Comment deleted"
                 });
             }
             else{
-<span class="cstat-no" title="statement not covered" >                res.status(404).json({</span>
+                res.status(404).json({
                     "status":"fail",
                     "message": "Comment not found"
                 });
@@ -513,8 +513,8 @@ commentRoute.delete("/:id",isAdmin, async (req: Request, res: Response) =&gt; {
 });
 &nbsp;
 // New comment
-function <span class="fstat-no" title="function not covered" >escapeHtml(</span>html: string) {
-<span class="cstat-no" title="statement not covered" >	return html</span>
+function escapeHtml(html: string) {
+	return html
 		.replace(/&amp;/g, "&amp;amp;")
 		.replace(/&lt;/g, "&amp;lt;")
 		.replace(/&gt;/g, "&amp;gt;")
@@ -529,25 +529,25 @@ commentRoute.post("/", async(req: Request, res: Response)=&gt;{
             "message": check.error.message
         });
     }
-    else<span class="missing-if-branch" title="else path not taken" >E</span>{
-        let blogId = <span class="cstat-no" title="statement not covered" >req.body.blogId;</span>
-<span class="cstat-no" title="statement not covered" >        req.body.comment = escapeHtml(req.body.comment);</span>
-<span class="cstat-no" title="statement not covered" >        req.body.userName = escapeHtml(req.body.userName);</span>
-<span class="cstat-no" title="statement not covered" >        try{</span>
-<span class="cstat-no" title="statement not covered" >            if(await Blog.findById(blogId)){</span>
-                let newComment = <span class="cstat-no" title="statement not covered" >await Comment.create(req.body);</span>
-<span class="cstat-no" title="statement not covered" >                res.status(201).json({</span>
+    else{
+        let blogId = req.body.blogId;
+        req.body.comment = escapeHtml(req.body.comment);
+        req.body.userName = escapeHtml(req.body.userName);
+        try{
+            if(await Blog.findById(blogId)){
+                let newComment = await Comment.create(req.body);
+                res.status(201).json({
                     "status":"success",
                     "message": "Comment received",
                     "id": newComment._id
                 });
             }
-            else{
-<span class="cstat-no" title="statement not covered" >                res.status(400).json({"error": "Blog not found"});</span>
+            else<span class="missing-if-branch" title="else path not taken" >E</span>{
+<span class="cstat-no" title="statement not covered" >                res.status(404).json({"error": "Blog not found"});</span>
             }
         }
         catch(error:any){
-<span class="cstat-no" title="statement not covered" >            res.status(400).json({"error": "Blog not found"});</span>
+<span class="cstat-no" title="statement not covered" >            res.status(404).json({"error": "Blog not found"});</span>
         }
     }
 })
@@ -559,7 +559,7 @@ export default commentRoute;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-10T11:25:40.719Z
+                at 2024-03-10T11:50:07.509Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

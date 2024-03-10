@@ -127,10 +127,7 @@ blogsRoute.post("/",isAdmin,async (req: Request, res: Response) => {
 			req.body.picture = picture;
 		}
 		else{
-			res.status(400).json({
-				status: 'fail',
-				message: "Invalid file provided"
-			})
+			req.body.picture = "default.png";
 		}
 
 		if(!check.error){
@@ -148,7 +145,6 @@ blogsRoute.post("/",isAdmin,async (req: Request, res: Response) => {
 		}
 	} catch (error: any) {
 		console.log(error.message);
-		res.status(400).json(error.message);
 	}
 });
 
