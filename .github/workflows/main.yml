@@ -64,5 +64,8 @@ jobs:
         run: npm install coveralls --save-dev
 
       - name: Send coverage data to Coveralls
-        run: npx coveralls < coverage/lcov.info
-
+        run: |
+          npm run test -- --coverage --ci
+          cat ./coverage/lcov.info | npx coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
