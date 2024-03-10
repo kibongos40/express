@@ -74,7 +74,7 @@ loginRoute.post("/",(req: Request, res: Response)=>{
     catch(error){
         res.status(500).json({
             "status": "fail",
-            "error": "error"
+            "message": error
         });
     }
 });
