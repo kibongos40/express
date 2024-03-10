@@ -27,20 +27,24 @@ const mongoose_1 = __importStar(require("mongoose"));
 const CommentSchema = new mongoose_1.Schema({
     blogId: {
         type: String,
-        required: true
+        required: true,
     },
     userName: {
         type: String,
-        required: true
+        required: true,
     },
     comment: {
         type: String,
-        required: true
+        required: true,
+    },
+    approved: {
+        type: Boolean,
+        default: false
     },
     dateCommented: {
         type: Date,
-        default: Date()
-    }
+        default: Date(),
+    },
 });
 const Comment = mongoose_1.default.model("Comment", CommentSchema);
 exports.default = Comment;

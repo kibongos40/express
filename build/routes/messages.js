@@ -16,9 +16,12 @@ const express_1 = __importDefault(require("express"));
 const joi_1 = __importDefault(require("joi"));
 const messageModel_1 = __importDefault(require("../models/messageModel"));
 const isAdmin_1 = __importDefault(require("./isAdmin"));
+const invalidJson_1 = __importDefault(require("./invalidJson"));
+const cors_1 = __importDefault(require("cors"));
 // Router
 let messagesRoute = express_1.default.Router();
 // Express body parsers
+messagesRoute.use((0, cors_1.default)());
 messagesRoute.use(express_1.default.json());
 messagesRoute.use(express_1.default.urlencoded({
     extended: true
@@ -32,27 +35,34 @@ function validateMessage(message) {
     });
     return schema.validate(message);
 }
-// Endpoints:
 // Handling Invalid JSON
-messagesRoute.use((err, req, res, next) => {
-    if (err && "body" in err) {
-        console.error(err);
-        return res.status(400).send({ message: err.message }); // Bad request
-    }
-    next();
-});
+messagesRoute.use(invalidJson_1.default);
 // New Message
+function escapeHtml(html) {
+    return html
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 messagesRoute.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let check = validateMessage(req.body);
     if (check.error) {
-        res.json({
+        res.status(400).json({
+            status: "fail",
             error: check.error.message,
         });
     }
     else {
+        req.body.name = escapeHtml(req.body.name);
+        req.body.email = escapeHtml(req.body.email);
+        req.body.message = escapeHtml(req.body.message);
         let message = yield messageModel_1.default.create(req.body);
-        res.json({
+        res.status(201).json({
+            status: "success",
             message: "Your message was received",
+            id: message._id
         });
     }
 }));
@@ -60,28 +70,34 @@ messagesRoute.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function
 messagesRoute.get("/", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let messages = yield messageModel_1.default.find({});
     if (messages.length == 0) {
-        return res.status(404).json({
-            "error": "No messages found"
+        return res.status(200).json({
+            "status": "fail",
+            "message": "No messages found"
         });
     }
-    res.json(messages);
+    res.json({
+        status: "success",
+        message: messages,
+    });
 }));
 // Delete a message
-messagesRoute.get("/delete/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+messagesRoute.delete("/:id", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let id = req.params.id;
     if (id) {
         if (yield messageModel_1.default.findByIdAndDelete(id)) {
-            res.status(200).json({ "message": "Message Deleted" });
+            res.status(200).json({ "status": "success", "message": "Message Deleted" });
         }
         else {
-            res.status(404).json({ "error": "Message not found" });
+            res
+                .status(404)
+                .json({ "status": "fail", "message": "Message not found" });
         }
     }
 }));
 // Default
 messagesRoute.all("/", (req, res) => {
     res.json({
-        message: "Messages endpoint",
+        "status": "success", "message": "Messages endpoint",
     });
 });
 exports.default = messagesRoute;

@@ -27,11 +27,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const app_1 = __importStar(require("./app"));
 let url = process.env.MONGODB_URI;
 let api = (0, express_1.default)();
+api.use((0, cors_1.default)());
 api.use("/api/v1/", app_1.default);
+api.use((0, cors_1.default)(), express_1.default.static("public"));
 api.all("/", (req, res) => {
     res.status(301).redirect("/api/v1");
 });

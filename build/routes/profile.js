@@ -18,7 +18,9 @@ const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const mime_types_1 = __importDefault(require("mime-types"));
 const isAdmin_1 = __importDefault(require("./isAdmin"));
 const joi_1 = __importDefault(require("joi"));
+const cors_1 = __importDefault(require("cors"));
 const profileRoute = express_1.default.Router();
+profileRoute.use((0, cors_1.default)());
 profileRoute.use(express_1.default.urlencoded({
     extended: true,
 }));
@@ -47,7 +49,10 @@ profileRoute.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         newProfile.intro = initIntro;
         newProfile.picture = initPicture;
         newProfile.save();
-        res.send(newProfile);
+        res.status(200).json({
+            status: "success",
+            message: newProfile,
+        });
     }
     else {
         res.send(profile);
@@ -60,7 +65,7 @@ function validateIntro(data) {
     });
     return schema.validate(data);
 }
-profileRoute.patch("/update", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+profileRoute.patch("/", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let isEmpty = false;
     let profile = yield profileModel_1.default.find({});
     if (profile.length == 0) {
@@ -69,6 +74,7 @@ profileRoute.patch("/update", isAdmin_1.default, (req, res) => __awaiter(void 0,
     let check = validateIntro(req.body);
     if (check.error) {
         return res.status(400).json({
+            "status": "fail",
             "error": check.error.message
         });
     }

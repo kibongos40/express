@@ -8,20 +8,17 @@ const express_1 = __importDefault(require("express"));
 const joi_1 = __importDefault(require("joi"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const sha256_1 = __importDefault(require("sha256"));
+const invalidJson_1 = __importDefault(require("./invalidJson"));
+const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 const loginRoute = express_1.default.Router();
+loginRoute.use((0, cors_1.default)());
 loginRoute.use(express_1.default.json());
 loginRoute.use(express_1.default.urlencoded({
     extended: true
 }));
 // Handling Invalid JSON
-loginRoute.use((err, req, res, next) => {
-    if (err && "body" in err) {
-        console.error(err);
-        return res.status(400).send({ message: err.message }); // Bad request
-    }
-    next();
-});
+loginRoute.use(invalidJson_1.default);
 function validateUser(data) {
     let schema = joi_1.default.object().keys({
         username: joi_1.default.string().required(),
@@ -34,7 +31,7 @@ loginRoute.post("/", (req, res) => {
         if (req.body) {
             let check = validateUser(req.body);
             if (check.error) {
-                return res.json({
+                return res.status(400).json({
                     "status": "fail",
                     "message": check.error.message
                 });
@@ -49,7 +46,7 @@ loginRoute.post("/", (req, res) => {
                     "user": username
                 };
                 let token = jsonwebtoken_1.default.sign(payload, process.env.JWT_SECRET, {
-                    expiresIn: "30m"
+                    expiresIn: "2h"
                 });
                 res.status(200).json({
                     "status": "success",
@@ -59,21 +56,16 @@ loginRoute.post("/", (req, res) => {
             }
             else {
                 return res.json({
-                    "error": "No user found"
+                    "status": "fail",
+                    "message": "Invalid username or Password"
                 });
             }
         }
-        else {
-            return res.status(403).json({
-                "status": "fail",
-                "error": "Username and password required"
-            });
-        }
     }
-    catch (_a) {
+    catch (error) {
         res.status(500).json({
             "status": "fail",
-            "error": "Server Error"
+            "error": "error"
         });
     }
 });
