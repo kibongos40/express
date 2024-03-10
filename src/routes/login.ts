@@ -4,11 +4,13 @@ import Joi from "joi";
 import dotenv from "dotenv";
 import sha256 from "sha256";
 import invalidJson from "./invalidJson";
+import cors from "cors";
 
 dotenv.config()
 
 const loginRoute: Router = express.Router();
 
+loginRoute.use(cors());
 loginRoute.use(express.json());
 loginRoute.use(express.urlencoded({
     extended: true
@@ -53,7 +55,7 @@ loginRoute.post("/",(req: Request, res: Response)=>{
                     "user": username
                 };
                 let token = jwt.sign(payload, process.env.JWT_SECRET as string, {
-                    expiresIn: "30m"
+                    expiresIn: "2h"
                 });
                 res.status(200).json({
                     "status":"success",
@@ -63,7 +65,8 @@ loginRoute.post("/",(req: Request, res: Response)=>{
             }
             else{
                 return res.json({
-                    "error": "No user found"
+                    "status":"fail",
+                    "message": "Invalid username or Password"
                 })
             }
         }

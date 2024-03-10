@@ -6,7 +6,8 @@
 	"scripts": {
 		"test": "npx jest --coverage",
 		"start": "node ./build/app.js",
-		"tscript": "nodemon ./src/index.ts"
+		"tscript": "nodemon ./src/index.ts",
+		"redocly": "redocly build-docs API.yaml"
 	},
 	"author": "Kibongo Simon Peter",
 	"license": "ISC",

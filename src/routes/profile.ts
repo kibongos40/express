@@ -4,8 +4,12 @@ import fileUpload, {UploadedFile} from "express-fileupload";
 import mimeTypes from "mime-types"
 import isAdmin from "./isAdmin";
 import Joi, { func } from "joi";
+import cors from "cors";
 
 const profileRoute: Router = express.Router();
+
+
+profileRoute.use(cors());
 
 profileRoute.use(
 	express.urlencoded({

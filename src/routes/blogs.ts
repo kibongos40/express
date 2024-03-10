@@ -2,14 +2,18 @@ import express, {NextFunction, Request, Response} from "express";
 import Blog, { IBlog } from "../models/blogModels";
 import isAdmin from "./isAdmin";
 import mongoose from "mongoose";
-import Joi from "joi";
+import Joi, { func, invalid } from "joi";
+import invalidJson from "./invalidJson";
+import cors from "cors";
+import fileUpload, {UploadedFile} from "express-fileupload";
+import mimeTypes from "mime-types"
+import Comment, {IComment} from "../models/commentModel";
 
 function validateBlog(data:object){
 	let schema = Joi.object().keys({
 		title: Joi.string().required(),
 		description: Joi.string().required(),
-		content: Joi.string().required().min(5),
-		picture: Joi.string()
+		content: Joi.string().required().min(5)
 	})
 	return schema.validate(data);
 }
@@ -18,19 +22,23 @@ function validateBlog(data:object){
 const blogsRoute = express.Router();
 blogsRoute.use(express.json());
 
+
 // Handling Invalid JSON
 
- blogsRoute.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-		if (err instanceof SyntaxError && "body" in err) {
-			console.error(err);
-			return res.status(400).send({ status: 400, message: err.message }); // Bad request
-		}
-		next();
- });
+ blogsRoute.use(invalidJson);
+
+//  CORS and file upload
+
+ blogsRoute.use(cors());
+ blogsRoute.use(express.urlencoded({
+	extended: true
+ }))
+
+ blogsRoute.use(fileUpload());
 
 blogsRoute.get("/", async (req: Request, res: Response) => {
 	try {
-		let blogs: IBlog[] = await Blog.find({}, "_id description title picture");
+		let blogs: IBlog[] = await Blog.find({}, "_id description title picture createdAt");
 		res.status(200).json({
 			"status": "success",
 			"message": blogs
@@ -69,6 +77,10 @@ blogsRoute.delete("/:id",isAdmin, async(req: Request, res: Response)=>{
 		if (req.params.id) {
 				let bid = req.params.id;
 				let deleted = await Blog.findByIdAndDelete(bid);
+				let comments = await Comment.deleteMany({blogId: bid});
+				if(comments){
+					console.log("Comments deleted");
+				}
 				if (deleted) {
 					res.status(200).json({
 						status: "success",
@@ -88,12 +100,45 @@ blogsRoute.delete("/:id",isAdmin, async(req: Request, res: Response)=>{
 
 // New Blog article
 
+function uploadFile(req: Request): string | boolean{
+	if(req.files && req.files.picture){
+		let file = req.files.picture as UploadedFile;
+		let types = ["png", "jpg", "jpeg", "webp", "gif", "heif"];
+		let type = mimeTypes.extension(file.mimetype);
+		if(types.includes(type as string)){
+			let name = Date.now() + "." + type;
+			console.log(name);
+			file.mv("public/images/blogs/"+name, (err:any)=>{
+				console.log(err);
+				return false;
+			})
+			return name;
+		}
+	}
+		return false;
+}
+
 blogsRoute.post("/",isAdmin,async (req: Request, res: Response) => {
 	try {
 		let check = validateBlog(req.body);
+		console.log(req.body);
+		let picture = uploadFile(req);
+		if(picture != false){
+			req.body.picture = picture;
+		}
+		else{
+			res.status(400).json({
+				status: 'fail',
+				message: "Invalid file provided"
+			})
+		}
+
 		if(!check.error){
 			const blog: IBlog = await Blog.create(req.body);
-			res.status(201).json(blog);
+			res.status(201).json({
+				status: "success",
+				message: blog
+			});
 		}
 		else{
 			res.status(400).json({
@@ -111,6 +156,7 @@ blogsRoute.post("/",isAdmin,async (req: Request, res: Response) => {
 
 blogsRoute.put("/:id",isAdmin, async(req: Request, res: Response)=>{
 	try{
+		let picture = uploadFile(req);
 		let id = req.params.id;
 		if(await Blog.findById(id)){
 			let blog:IBlog = await Blog.findById(id) as IBlog;
@@ -122,6 +168,10 @@ blogsRoute.put("/:id",isAdmin, async(req: Request, res: Response)=>{
 			}
 			if(req.body.content && req.body.content.length > 1){
 				blog.content = req.body.content;
+			}
+			if (picture != false) {
+				req.body.picture = picture;
+				blog.picture = picture as string;
 			}
 			blog.save();
 			res.status(200).json({

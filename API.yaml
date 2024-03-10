@@ -1,250 +1,331 @@
-{
-  "openapi": "3.0.3",
-  "info": {
-    "title": "Backend",
-    "description": "",
-    "version": "1.0.0"
-  },
-  "paths": {
-    "http://127.0.0.1:3000": {
-      "get": {
-        "description": "",
-        "summary": "root",
-        "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "successful"
-          },
-          "401": {
-            "description": "authorization failed"
-          },
-          "422": {
-            "description": "validation failed"
-          },
-          "500": {
-            "description": "unknown server error"
-          }
-        },
-        "security": []
-      }
-    },
-    "http://127.0.0.1:3000/blogs/add/": {
-      "post": {
-        "description": "",
-        "summary": "New Blog",
-        "tags": [
-          "Blogs"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "successful"
-          },
-          "401": {
-            "description": "authorization failed"
-          },
-          "422": {
-            "description": "validation failed"
-          },
-          "500": {
-            "description": "unknown server error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "example": {
-                  "title": "Blog 404",
-                  "description": "Friday blog",
-                  "content": "jhfdjsd fmnsd fms dfsdfjkdsbf sdfj dsmfsfdn",
-                  "picture": "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "http://127.0.0.1:3000/blogs": {
-      "get": {
-        "description": "",
-        "summary": "Get Single",
-        "tags": [
-          "Blogs"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "successful"
-          },
-          "401": {
-            "description": "authorization failed"
-          },
-          "422": {
-            "description": "validation failed"
-          },
-          "500": {
-            "description": "unknown server error"
-          }
-        },
-        "security": []
-      }
-    },
-    "http://127.0.0.1:3000/blogs/delete/65cf8531d2c712d9c5a00c33": {
-      "delete": {
-        "description": "",
-        "summary": "Delete",
-        "tags": [
-          "Blogs"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "successful"
-          },
-          "401": {
-            "description": "authorization failed"
-          },
-          "422": {
-            "description": "validation failed"
-          },
-          "500": {
-            "description": "unknown server error"
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "http://127.0.0.1:3000/messages/": {
-      "get": {
-        "description": "",
-        "summary": "All messages",
-        "tags": [
-          "Messages"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "successful"
-          },
-          "401": {
-            "description": "authorization failed"
-          },
-          "422": {
-            "description": "validation failed"
-          },
-          "500": {
-            "description": "unknown server error"
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "http://127.0.0.1:3000/messages/delete/65d40b4fb1cd16762eafec5e": {
-      "get": {
-        "description": "",
-        "summary": "Delete message",
-        "tags": [
-          "Messages"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "successful"
-          },
-          "401": {
-            "description": "authorization failed"
-          },
-          "422": {
-            "description": "validation failed"
-          },
-          "500": {
-            "description": "unknown server error"
-          }
-        },
-        "security": []
-      }
-    },
-    "http://127.0.0.1:3000/messages": {
-      "post": {
-        "description": "",
-        "summary": "New message",
-        "tags": [
-          "Messages"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "successful"
-          },
-          "401": {
-            "description": "authorization failed"
-          },
-          "422": {
-            "description": "validation failed"
-          },
-          "500": {
-            "description": "unknown server error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "example": {
-                  "name": "kibongo",
-                  "email": "someone@gmail.com",
-                  "message": "abcdefg"
-                }
-              }
-            }
-          }
-        },
-        "security": []
-      }
-    }
-  },
-  "servers": [
-    {
-      "description": "Base Environment",
-      "variables": {}
-    }
-  ],
-  "tags": [
-    {
-      "name": "Blogs",
-      "description": ""
-    },
-    {
-      "name": "Messages",
-      "description": ""
-    }
-  ],
-  "components": {
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
-    }
-  }
-}
+openapi: 3.0.3
+info:
+  title: My Portfolio Backend API documentation
+  description: "The API backend for KIBONGO Simon Peter's Portfolio backend documentation"
+  version: 1.0.0
+paths:
+  /api/v1:
+    get:
+      description: 'Endpoint to retrieve the default API root information.'
+      summary: Get API root
+      tags:
+        - Default
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '500':
+          description: unknown server error
+      security: []
+  /api/v1/blogs:
+    get:
+      description: 'Endpoint to fetch all existing blog posts.'
+      summary: Get all blogs
+      tags:
+        - Blogs
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security: []
+    post:
+      description: 'Endpoint to create a new blog post.'
+      summary: Create a new blog
+      tags:
+        - Blogs
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: Blog 404
+                description: Friday blog
+                content: jhfdjsd fmnsd fms dfsdfjkdsbf sdfj dsmfsfdn
+                picture: https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
+      security:
+        - bearerAuth: []
+  /api/v1/blogs/{id}:
+    delete:
+      description: 'Endpoint to delete a specific blog post.'
+      summary: Delete a blog
+      tags:
+        - Blogs
+      parameters:
+        - name: id
+          in: path
+          description: ID of the blog to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security:
+        - bearerAuth: []
+    put:
+      description: 'Endpoint to update a specific blog post.'
+      summary: Update a blog
+      tags:
+        - Blogs
+      parameters:
+        - name: id
+          in: path
+          description: ID of the blog to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: Blog 404
+                description: Friday blog
+                content: jhfdjsd fmnsd fms dfsdfjkdsbf sdfj dsmfsfdn
+                picture: https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
+      security:
+        - bearerAuth: []
+  /api/v1/messages:
+    get:
+      description: 'Endpoint to fetch all existing messages.'
+      summary: Get all messages
+      tags:
+        - Messages
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security:
+        - bearerAuth: []
+    post:
+      description: 'Endpoint to create a new message.'
+      summary: Create a new message
+      tags:
+        - Messages
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: kibongo
+                email: someone@gmail.com
+                message: abcde
+      security: []
+  /api/v1/messages/{id}:
+    delete:
+      description: 'Endpoint to delete a specific message.'
+      summary: Delete a message
+      tags:
+        - Messages
+      parameters:
+        - name: id
+          in: path
+          description: ID of the message to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security:
+        - bearerAuth: []
+  /api/v1/profile:
+    get:
+      description: 'Endpoint to retrieve profile information.'
+      summary: Get Profile information
+      tags:
+        - Profile
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security: []
+    patch:
+      description: 'Endpoint to update profile information.'
+      summary: Update profile
+      tags:
+        - Profile
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                intro:
+                  type: string
+                  description: ''
+  /api/v1/comments:
+    get:
+      description: 'Endpoint to fetch all existing comments.'
+      summary: Get all comments
+      tags:
+        - Comments
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security:
+        - bearerAuth: []
+    post:
+      description: 'Endpoint to create a new comment.'
+      summary: Create a new comment
+      tags:
+        - Comments
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: kibongo
+                email: someone@gmail.com
+                comment: abcde
+      security: []
+  /api/v1/comments/{id}:
+    delete:
+      description: 'Endpoint to delete a specific comment.'
+      summary: Delete a comment
+      tags:
+        - Comments
+      parameters:
+        - name: id
+          in: path
+          description: ID of the comment to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security:
+        - bearerAuth: []
+    get:
+      description: 'Endpoint to get comments for a specific blog.'
+      summary: Get comments for a blog
+      tags:
+        - Comments
+      parameters:
+        - name: id
+          in: path
+          description: ID of the blog to fetch comments for
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: authorization failed
+        '422':
+          description: validation failed
+        '500':
+          description: unknown server error
+      security:
+        - bearerAuth: []
+servers:
+  - description: Main API Domain
+    variables: {}
+    url: 'https://kibongo.com'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+security:
+  - bearerAuth: []

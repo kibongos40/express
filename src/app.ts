@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import mongoose, { ObjectId } from "mongoose";
 
+import fileUpload, {UploadedFile} from "express-fileupload";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken"
 
@@ -16,16 +17,15 @@ import messagesRoute from "./routes/messages"
 import profileRoute from "./routes/profile"
 import commentRoute from "./routes/comments";
 import loginRoute from "./routes/login";
+import invalidJson from "./routes/invalidJson";
+import isAdmin from "./routes/isAdmin";
+import Blog, { IBlog } from "./models/blogModels";
+import Comment, { IComment } from "./models/commentModel";
+import Message, { IMessage } from "./models/messageModel";
 
 // Handling Invalid JSON
 
- app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-		if (err instanceof SyntaxError && "body" in err) {
-			console.error(err);
-			return res.status(400).send({ status: 400, message: err.message }); // Bad request
-		}
-		next();
- });
+ app.use(invalidJson);
 
 // Initialising routes
 
@@ -40,8 +40,10 @@ app.use("/login", loginRoute);
 export let uri:any = process.env.MONGODB;
 
 
-app.use("/ftp",express.static("public"));
+
 app.use(express.json());
+app.use(express.urlencoded())
+app.use(fileUpload())
 app.use(cors());
 
 
@@ -52,12 +54,30 @@ app.get("/", (req: Request, res: Response) => {
 	});
 });
 
+app.get("/details",isAdmin, async (req: Request, res: Response) => {
+	let messages: IMessage[] = await Message.find({});
+	let comments: IComment[] = await Comment.find({});
+	let blogs: IBlog[] = await Blog.find({});
+	let details = {
+		"blogs": blogs.length,
+		"comments": comments.length,
+		"messages": messages.length
+	}
+	res.status(200).json({
+		status: "success",
+		message: details
+	});
+});
+app.post("/test", async (req: Request, res: Response) => {
+	console.log(req.files?.file);
+	res.json({"message": "Test file received"});
+});
 
 app.all("*", (req: Request, res: Response) => {
 	res.status(404).json({
+		status: "fail",
 		message: `Endpoint ${req.url} was not found!`,
 	});
 });
-
 
 export default app;

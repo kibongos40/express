@@ -11,7 +11,10 @@ let url = process.env.MONGODB_URI;
 
 let api = express();
 
+api.use(cors());
+
 api.use("/api/v1/", app);
+api.use(cors(),express.static("public"));
 
 api.all("/",(req: Request, res: Response)=>{
     res.status(301).redirect("/api/v1");
