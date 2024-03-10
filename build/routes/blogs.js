@@ -125,10 +125,7 @@ blogsRoute.post("/", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0, 
             req.body.picture = picture;
         }
         else {
-            res.status(400).json({
-                status: 'fail',
-                message: "Invalid file provided"
-            });
+            req.body.picture = "default.png";
         }
         if (!check.error) {
             const blog = yield blogModels_1.default.create(req.body);
@@ -146,7 +143,6 @@ blogsRoute.post("/", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0, 
     }
     catch (error) {
         console.log(error.message);
-        res.status(400).json(error.message);
     }
 }));
 // Update a blog article

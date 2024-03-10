@@ -149,11 +149,11 @@ commentRoute.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function*
                 });
             }
             else {
-                res.status(400).json({ "error": "Blog not found" });
+                res.status(404).json({ "error": "Blog not found" });
             }
         }
         catch (error) {
-            res.status(400).json({ "error": "Blog not found" });
+            res.status(404).json({ "error": "Blog not found" });
         }
     }
 }));
