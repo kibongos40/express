@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.56% </span>
+                <span class="strong">93.75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>49/64</span>
+                <span class='fraction'>60/64</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.66% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/12</span>
+                <span class='fraction'>8/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>10/12</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.27% </span>
+                <span class="strong">93.22% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>45/59</span>
+                <span class='fraction'>55/59</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -288,28 +288,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -451,28 +451,28 @@ commentRoute.get("/:id", async (req: Request, res: Response) =&gt; {
 &nbsp;
 // Approve a comment
 &nbsp;
-commentRoute.put("/:id", isAdmin, <span class="fstat-no" title="function not covered" >async(r</span>eq: Request, res: Response)=&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >{</span></span>
-    let id = <span class="cstat-no" title="statement not covered" >req.params.id;</span>
-<span class="cstat-no" title="statement not covered" >    try{</span>
-        let comment: IComment | null = <span class="cstat-no" title="statement not covered" >await Comment.findById(id);</span>
-<span class="cstat-no" title="statement not covered" >        if(comment){</span>
-<span class="cstat-no" title="statement not covered" >            comment.approved = !comment.approved;</span>
-            let status = <span class="cstat-no" title="statement not covered" >comment.approved;</span>
-<span class="cstat-no" title="statement not covered" >            comment.save();</span>
-<span class="cstat-no" title="statement not covered" >            res.status(200).json({</span>
+commentRoute.put("/:id", isAdmin, async(req: Request, res: Response)=&gt;{
+    let id = req.params.id;
+    try{
+        let comment: IComment | null = await Comment.findById(id);
+        if(comment){
+            comment.approved = !comment.approved;
+            let status = comment.approved;
+            comment.save();
+            res.status(200).json({
                 "status": "success",
-                "message": `Comment ${status ? 'approved':'denied'}`
+                "message": `Comment ${status ? 'approved':<span class="branch-1 cbranch-no" title="branch not covered" >'denied'}</span>`
             });
         }
         else{
-<span class="cstat-no" title="statement not covered" >            res.status(404).json({</span>
+            res.status(404).json({
                 "status": "fail",
                 "message": "Comment not found"
             });
         }
     }
     catch{
-<span class="cstat-no" title="statement not covered" >            res.status(500).json({</span>
+            res.status(500).json({
                 "status": "fail",
                 "message": "Internal server error"
             });
@@ -559,7 +559,7 @@ export default commentRoute;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-11T21:58:48.301Z
+                at 2024-03-11T22:54:15.196Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -2,6 +2,7 @@ import request, { Request } from "supertest";
 import app from "./app";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import fs from "fs";
 
 dotenv.config();
 
@@ -56,6 +57,14 @@ describe("Testing the login", () => {
 		}`;
 		let r = await request(app).post("/login");
 		expect(r.status).toBe(400);
+	});
+	test("Invalid user", async () => {
+		let str = {
+			username: "Simon",
+			password: "Simon"
+		};
+		let r = await request(app).post("/login").send(str);
+		expect(r.status).toBe(401);
 	});
 });
 
@@ -185,16 +194,29 @@ describe("Testing Comments Endpoint", () => {
 		let fakeComment = {
 			userName: "Kibongo",
 			comment: "This is a test comment",
-			blogId: "hsbdsfj"
+			blogId: "hsbdsfj",
 		};
 		let create = await request(app).post("/comments").send(newComment);
-		let failCreate = await request(app)
-			.post("/comments")
-			.send(fakeComment);
+		let failCreate = await request(app).post("/comments").send(fakeComment);
 		let commentId = create.body.id;
 		expect(create.status).toBe(201);
 		expect(failCreate.status).toBe(404);
+		// Approve
 
+		let approveComment = await request(app)
+			.put("/comments/" + commentId)
+			.set("Authorization", `Bearer ${token}`);
+		expect(approveComment.status).toBe(200);
+
+		approveComment = await request(app)
+			.put("/comments/" + testBlogId)
+			.set("Authorization", `Bearer ${token}`);
+		expect(approveComment.status).toBe(404);
+
+		approveComment = await request(app)
+			.put("/comments/jkashdkj")
+			.set("Authorization", `Bearer ${token}`);
+		expect(approveComment.status).toBe(500);
 		// Deleting a comment
 
 		let deleteComment = await request(app)
@@ -277,19 +299,25 @@ describe("Testing Messages Endpoint", () => {
 })
 
 // Profile
-
 describe("Testing Profile", ()=>{
 	test("Getting Profile",async()=>{
 		let getProfile = await request(app).get("/profile");
 		expect(getProfile.status).toBe(200);
 	});
+
 	test("Updating Profile", async () => {
 		let setProfile = await request(app).patch("/profile")
 		.set("Authorization", `Bearer ${token}`).send({
 			"intro": "Sample introduction as requested"
 		});
 		expect(setProfile.status).toBe(200);
-	
+
+		setProfile = await request(app).patch("/profile")
+		.set("Authorization", `Bearer ${token}`).send({
+			"empty": "Sample introduction as requested"
+		});
+		expect(setProfile.status).toBe(400);
+
 	// Invalid Profile
 
 	setProfile = await request(app)

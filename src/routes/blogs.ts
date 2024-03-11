@@ -165,10 +165,7 @@ blogsRoute.put("/:id",isAdmin, async(req: Request, res: Response)=>{
 			if(req.body.content && req.body.content.length > 1){
 				blog.content = req.body.content;
 			}
-			if (picture != false) {
-				req.body.picture = picture;
-				blog.picture = picture as string;
-			}
+			if (picture != false) { req.body.picture = picture; blog.picture = picture as string;}
 			blog.save();
 			res.status(200).json({
 				"status":"success",

@@ -64,7 +64,7 @@ loginRoute.post("/",(req: Request, res: Response)=>{
                 });
             }
             else{
-                return res.json({
+                return res.status(401).json({
                     "status":"fail",
                     "message": "Invalid username or Password"
                 })
