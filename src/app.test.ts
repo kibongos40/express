@@ -10,7 +10,7 @@ let id = "";
 let testBlogId: string = "";
 
 beforeAll(async () => {
-	mongoose.connect(process.env.MONGODB_URI as string);
+	mongoose.connect(process.env.MONGODB as string);
 	let res = await request(app).post("/login").send({
 		username: "admin",
 		password: "atlp2024",
@@ -39,6 +39,12 @@ describe("Testing the root path", () => {
 		let response = await request(app).get("/");
 		expect(response.status).toBe(200);
 		expect(response.body.message).toBe("Welcome");
+	});
+	test("Should get details", async () => {
+		let response = await request(app)
+			.get("/details")
+			.set("Authorization", `Bearer ${token}`);;
+		expect(response.status).toBe(200);
 	});
 });
 
@@ -179,6 +185,7 @@ describe("Testing Comments Endpoint", () => {
 		let fakeComment = {
 			userName: "Kibongo",
 			comment: "This is a test comment",
+			blogId: "hsbdsfj"
 		};
 		let create = await request(app).post("/comments").send(newComment);
 		let failCreate = await request(app)
@@ -186,7 +193,7 @@ describe("Testing Comments Endpoint", () => {
 			.send(fakeComment);
 		let commentId = create.body.id;
 		expect(create.status).toBe(201);
-		expect(failCreate.status).toBe(400);
+		expect(failCreate.status).toBe(404);
 
 		// Deleting a comment
 

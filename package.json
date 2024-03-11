@@ -29,9 +29,13 @@
 		"jsonwebtoken": "^9.0.2",
 		"mime-types": "^2.1.35",
 		"mongoose": "^8.1.1",
+		"nodemon": "^3.1.0",
 		"serverless-http": "^3.2.0",
 		"sha256": "^0.2.0",
-		"ts-jest": "^29.1.2"
+		"ts-jest": "^29.1.2",
+		"ts-node": "^10.9.2",
+		"tsc": "^2.0.4",
+		"typescript": "^5.4.2"
 	},
 	"devDependencies": {
 		"@types/cors": "^2.8.17",

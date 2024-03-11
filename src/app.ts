@@ -68,10 +68,6 @@ app.get("/details",isAdmin, async (req: Request, res: Response) => {
 		message: details
 	});
 });
-app.post("/test", async (req: Request, res: Response) => {
-	console.log(req.files?.file);
-	res.json({"message": "Test file received"});
-});
 
 app.all("*", (req: Request, res: Response) => {
 	res.status(404).json({

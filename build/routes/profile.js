@@ -66,6 +66,10 @@ function validateIntro(data) {
     return schema.validate(data);
 }
 profileRoute.patch("/", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let del = yield profileModel_1.default.deleteMany({});
+    if (del) {
+        // Pass
+    }
     let isEmpty = false;
     let profile = yield profileModel_1.default.find({});
     if (profile.length == 0) {

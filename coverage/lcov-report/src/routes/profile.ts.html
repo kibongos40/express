@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56.45% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>35/62</span>
+                <span class='fraction'>40/64</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">43.75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/15</span>
+                <span class='fraction'>7/16</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.93% </span>
+                <span class="strong">62.29% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>33/59</span>
+                <span class='fraction'>38/61</span>
             </div>
         
             
@@ -187,7 +187,11 @@
 <a name='L122'></a><a href='#L122'>122</a>
 <a name='L123'></a><a href='#L123'>123</a>
 <a name='L124'></a><a href='#L124'>124</a>
-<a name='L125'></a><a href='#L125'>125</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -254,11 +258,15 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -297,16 +305,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -375,11 +383,15 @@ function validateIntro(data: object){
 }
 &nbsp;
 profileRoute.patch("/",isAdmin,async(req: Request, res: Response)=&gt;{
+    let del = await Profile.deleteMany({});
+    if(del){
+        // Pass
+    }
     let isEmpty:boolean = false;
     let profile = await Profile.find({});
 &nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if(profile.length == 0){
-<span class="cstat-no" title="statement not covered" >        isEmpty = true;</span>
+    if(profile.length == 0){
+        isEmpty = true;
     }
     let check = validateIntro(req.body);
     if(check.error){
@@ -420,17 +432,17 @@ profileRoute.patch("/",isAdmin,async(req: Request, res: Response)=&gt;{
                 "error": "Picture/Intro is required"
             });
         }
-        <span class="missing-if-branch" title="if path not taken" >I</span>if(isEmpty){
-            let newProfile = <span class="cstat-no" title="statement not covered" >new Profile();</span>
-<span class="cstat-no" title="statement not covered" >            newProfile.intro = req.body.intro;</span>
-<span class="cstat-no" title="statement not covered" >            newProfile.save();</span>
-<span class="cstat-no" title="statement not covered" >            res.json({message: "Profile intro created"});</span>
+        if(isEmpty){
+            let newProfile = new Profile();
+            newProfile.intro = req.body.intro;
+            newProfile.save();
+            res.json({message: "Profile intro created"});
         }
-        else{
-            await Profile.updateMany({},{
+        else<span class="missing-if-branch" title="else path not taken" >E</span>{
+<span class="cstat-no" title="statement not covered" >            await Profile.updateMany({},{</span>
                 intro: req.body.intro,
             });
-            res.json({ message: "Profile intro Updated" });
+<span class="cstat-no" title="statement not covered" >            res.json({ message: "Profile intro Updated" });</span>
         }
     }
 })
@@ -442,7 +454,7 @@ export default profileRoute;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-10T11:58:07.968Z
+                at 2024-03-11T21:58:48.301Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

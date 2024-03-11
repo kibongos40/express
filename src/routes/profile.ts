@@ -62,6 +62,10 @@ function validateIntro(data: object){
 }
 
 profileRoute.patch("/",isAdmin,async(req: Request, res: Response)=>{
+    let del = await Profile.deleteMany({});
+    if(del){
+        // Pass
+    }
     let isEmpty:boolean = false;
     let profile = await Profile.find({});
 

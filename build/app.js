@@ -65,11 +65,6 @@ app.get("/details", isAdmin_1.default, (req, res) => __awaiter(void 0, void 0, v
         message: details
     });
 }));
-app.post("/test", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    console.log((_a = req.files) === null || _a === void 0 ? void 0 : _a.file);
-    res.json({ "message": "Test file received" });
-}));
 app.all("*", (req, res) => {
     res.status(404).json({
         status: "fail",
