@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/kibongos40/express/badge.svg?branch=master)](https://coveralls.io/github/kibongos40/express?branch=master)
+[![Coverage Status Now](https://coveralls.io/repos/github/kibongos40/express/badge.svg?branch=master?cache=murakina)](https://coveralls.io/github/kibongos40/express?branch=master)
 # MY ANDELA PORTFOLIO BACKEND PROJECT
 
 This is the backend repo for my andela portfolio project.
