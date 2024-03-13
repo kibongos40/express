@@ -11,7 +11,7 @@ let id = "";
 let testBlogId: string = "";
 
 beforeAll(async () => {
-	mongoose.connect(process.env.MONGODB as string);
+	mongoose.connect(process.env.MONGODB_URI as string);
 	let res = await request(app).post("/login").send({
 		username: "admin",
 		password: "atlp2024",
