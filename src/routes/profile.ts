@@ -61,7 +61,7 @@ function validateIntro(data: object){
     return schema.validate(data);
 }
 
-profileRoute.patch("/",isAdmin,async(req: Request, res: Response)=>{
+profileRoute.patch("/",isAdmin,async(req: Request, res: Response):Promise<any>=>{
     let del = await Profile.deleteMany({});
     if(del){
         // Pass

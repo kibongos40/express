@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 
 dotenv.config();
 
-function isAdmin(req: Request, res:Response, next:NextFunction){
+function isAdmin(req: Request, res:Response, next:NextFunction):any{
     try{
         if(req.headers.authorization){
             let token = req.headers.authorization.split(" ")[1];

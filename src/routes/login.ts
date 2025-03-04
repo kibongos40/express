@@ -35,7 +35,7 @@ function validateUser(data: object){
     return schema.validate(data);
 }
 
-loginRoute.post("/",(req: Request, res: Response)=>{
+loginRoute.post("/",(req: Request, res: Response):any=>{
     try{
         if(req.body){
             let check = validateUser(req.body);

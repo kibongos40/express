@@ -65,7 +65,7 @@ messagesRoute.post("/", async (req: Request, res: Response) => {
 
 // All messages
 
-messagesRoute.get("/", isAdmin, async (req: Request, res: Response) => {
+messagesRoute.get("/", isAdmin, async (req: Request, res: Response):Promise<any> => {
 	let messages: IMessage[] = await Message.find({});
 	if(messages.length == 0){
 		return res.status(200).json({
