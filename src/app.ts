@@ -69,7 +69,7 @@ app.get("/details",isAdmin, async (req: Request, res: Response) => {
 	});
 });
 
-app.all("*", (req: Request, res: Response) => {
+app.all(/(.*)/, (req: Request, res: Response) => {
 	res.status(404).json({
 		status: "fail",
 		message: `Endpoint ${req.url} was not found!`,

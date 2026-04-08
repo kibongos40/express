@@ -70,6 +70,12 @@ loginRoute.post("/",(req: Request, res: Response):any=>{
                 })
             }
         }
+        else {
+            return res.status(400).json({
+                "status":"fail",
+                "message": "Missing request body"
+            });
+        }
     }
     catch(error){
         res.status(500).json({
